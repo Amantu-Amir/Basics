@@ -1,46 +1,36 @@
 class Solution {
 public:
-    int getBreakPoint(vector<int>& nums){
-        int L=0, R=nums.size()-1, mid=0;
-        while(L<=R){
-            mid=(L+R)/2;
-            if(nums[0]<=nums[mid]){
-                L=mid+1;
-            }
-            else{
-                R=mid-1;
-            }
-        }
-        return L;
-    }
-    
-    int find(int L, int R, vector<int>& v, int target){
+    int solve(int L, int R, vector<int>& v, int target){
         while(L<=R){
             int mid=L+(R-L)/2;
             if(v[mid]==target){
-                return mid;
+                return true;
             }
-            if(v[mid]>target){
-                R=mid-1;
+            if(v[L]==v[mid] and v[R]==v[mid]){
+                L++, R--;
+            }
+            else if(v[L]<=v[mid]){
+                if(v[L]<=target and v[mid]>target){
+                    R=mid-1;
+                }
+                else{
+                    L=mid+1;
+                }
             }
             else{
-                L=mid+1;
+                if(v[R]>=target and v[mid]<target){
+                    L=mid+1;
+                }
+                else{
+                    R=mid-1;
+                }
             }
         }
-        return -1;
+        return false;
     }
     
-    int search(vector<int>& nums, int target) {
-        int idx=getBreakPoint(nums);
-        int left=find(0, idx-1, nums, target);
-        int right=find(idx, nums.size()-1, nums, target);
-        if(left==-1 and right==-1){
-            return -1;
-        }
-        if(left!=-1){
-            return left;
-        }
-        return right;
+    bool search(vector<int>& nums, int target) {
+        return solve(0, nums.size()-1, nums, target);
     }
 };
 
