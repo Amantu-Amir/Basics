@@ -14,7 +14,7 @@ public:
         return L;
     }
     
-    int search(int L, int R, vector<int>& v, int target){
+    int find(int L, int R, vector<int>& v, int target){
         while(L<=R){
             int mid=L+(R-L)/2;
             if(v[mid]==target){
@@ -32,8 +32,8 @@ public:
     
     int search(vector<int>& nums, int target) {
         int idx=getBreakPoint(nums);
-        int left=search(0, idx-1, nums, target);
-        int right=search(idx, nums.size()-1, nums, target);
+        int left=find(0, idx-1, nums, target);
+        int right=find(idx, nums.size()-1, nums, target);
         if(left==-1 and right==-1){
             return -1;
         }
